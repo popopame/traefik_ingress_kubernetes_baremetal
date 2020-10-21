@@ -1,0 +1,14 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: gotest #Name of the ingressRoute
+  namespace: gotest
+spec:
+  entryPoints:
+    - web #traefik endpoint that will be used  , since this is not a secured endpoint , we use the web endpoint
+  routes:
+    - match: Host(`gotest.example.io`) #rule for the routing
+      kind: Rule
+      services:
+        - name: gotest-service # Name of the service that will be the endpoint of the ingress route
+          port: 8080  # port of the endpoint service 

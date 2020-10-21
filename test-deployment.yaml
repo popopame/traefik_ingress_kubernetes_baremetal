@@ -1,0 +1,39 @@
+# Source: geowallet-backend-mobile/templates/geowallet-backend-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gotest
+  labels:
+    app.kubernetes.io/name: gotest 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gotest
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: gotest
+    spec:
+      containers:
+      - name: gotest 
+        image: "popopame/gotest:latest"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080 
+--- 
+# Source: geowallet-backend-mobile/templates/geowallet-backend-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: gotest-service
+  labels:
+    app.kubernetes.io/name: gotest-service
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: gotest-service
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080 
